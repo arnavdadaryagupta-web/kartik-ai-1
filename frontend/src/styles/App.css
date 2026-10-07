@@ -756,3 +756,163 @@ body,
 
   z-index: 3;
 }
+/* =========================================================
+   REGISTER PAGE ENHANCEMENTS
+   ========================================================= */
+
+.register-card {
+    animation:
+        register-card-enter
+        0.45s ease-out;
+}
+
+@keyframes register-card-enter {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(12px)
+            scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* ==========================================
+   Register Logo
+   ========================================== */
+
+.register-logo {
+    background:
+        linear-gradient(
+            135deg,
+            #7c5cff,
+            #3f8cff
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(
+            94,
+            86,
+            255,
+            0.40
+        );
+}
+
+
+/* ==========================================
+   Register Password Hint
+   ========================================== */
+
+.register-password-hint {
+    margin-top: 7px;
+
+    color: #666b7d;
+
+    font-size: 11px;
+
+    padding-left: 2px;
+}
+
+
+/* ==========================================
+   Register Error
+   ========================================== */
+
+.register-error {
+    animation:
+        register-error-in
+        0.2s ease-out;
+}
+
+@keyframes register-error-in {
+
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==========================================
+   Register Button Disabled
+   ========================================== */
+
+.register-card
+.auth-register:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ==========================================
+   Better Input Hover
+   ========================================== */
+
+.register-card
+.auth-input-wrapper:hover:not(:focus-within) {
+
+    border-color:
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.055
+        );
+}
+
+
+/* ==========================================
+   Mobile
+   ========================================== */
+
+@media (max-width: 520px) {
+
+    .register-card {
+        max-height: calc(100vh - 28px);
+
+        overflow-y: auto;
+    }
+
+    .register-card::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .register-card::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .register-card::-webkit-scrollbar-thumb {
+        background:
+            rgba(
+                255,
+                255,
+                255,
+                0.15
+            );
+
+        border-radius: 10px;
+    }
+
+}
+

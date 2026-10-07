@@ -1,106 +1,448 @@
 import { useState } from "react";
 import API from "../../services/api";
 
-export default function Register({ onRegister, onSwitch }) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+export default function Register({
+    onRegister,
+    onSwitch
+}) {
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+    // ==========================================
+    // Form State
+    // ==========================================
 
-    setError("");
-    setLoading(true);
+    const [username, setUsername] =
+        useState("");
 
-    try {
-      const response = await API.post("/auth/register", {
-        username: username.trim(),
-        email: email.trim(),
-        password: password,
-      });
+    const [email, setEmail] =
+        useState("");
 
-      const token = response.data.access_token;
+    const [password, setPassword] =
+        useState("");
 
-      localStorage.setItem("access_token", token);
+    const [showPassword, setShowPassword] =
+        useState(false);
 
-      onRegister(token);
+    const [error, setError] =
+        useState("");
 
-    } catch (err) {
-      console.error(err);
+    const [loading, setLoading] =
+        useState(false);
 
-      setError(
-        err.response?.data?.detail ||
-        "Registration failed."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  return (
-    <div className="auth-container">
-      <div className="auth-card">
+    // ==========================================
+    // Register
+    // ==========================================
 
-        <h1>Kartik AI</h1>
+    const handleRegister = async (e) => {
 
-        <p>Create your account</p>
+        e.preventDefault();
 
-        <form onSubmit={handleRegister}>
+        setError("");
+        setLoading(true);
 
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+        try {
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+            const response =
+                await API.post(
+                    "/auth/register",
+                    {
+                        username:
+                            username.trim(),
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            minLength={6}
-            required
-          />
+                        email:
+                            email.trim(),
 
-          {error && (
-            <div className="auth-error">
-              {error}
+                        password
+                    }
+                );
+
+
+            const token =
+                response.data.access_token;
+
+
+            if (!token) {
+
+                throw new Error(
+                    "Registration token was not received."
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "access_token",
+                token
+            );
+
+
+            onRegister(token);
+
+        } catch (err) {
+
+            console.error(
+                "Register Error:",
+                err
+            );
+
+
+            setError(
+                err.response?.data?.detail ||
+                err.message ||
+                "Registration failed. Please try again."
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    };
+
+
+    // ==========================================
+    // UI
+    // ==========================================
+
+    return (
+
+        <div className="auth-page">
+
+            {/* ==================================
+                Background Glow
+            ================================== */}
+
+            <div
+                className="
+                    auth-glow
+                    auth-glow-one
+                "
+            />
+
+            <div
+                className="
+                    auth-glow
+                    auth-glow-two
+                "
+            />
+
+
+            {/* ==================================
+                Auth Card
+            ================================== */}
+
+            <div className="auth-card register-card">
+
+
+                {/* ==================================
+                    Logo
+                ================================== */}
+
+                <div className="auth-logo">
+
+                    <div
+                        className="
+                            auth-logo-icon
+                            register-logo
+                        "
+                    >
+                        ✦
+                    </div>
+
+                </div>
+
+
+                {/* ==================================
+                    Heading
+                ================================== */}
+
+                <div className="auth-heading">
+
+                    <h1>
+                        Create your account
+                    </h1>
+
+                    <p>
+                        Join{" "}
+                        <strong>
+                            Kartik AI
+                        </strong>{" "}
+                        and start your journey
+                    </p>
+
+                </div>
+
+
+                {/* ==================================
+                    Registration Form
+                ================================== */}
+
+                <form
+                    onSubmit={handleRegister}
+                >
+
+
+                    {/* ==================================
+                        Username
+                    ================================== */}
+
+                    <div className="auth-field">
+
+                        <label>
+                            Username
+                        </label>
+
+                        <div className="auth-input-wrapper">
+
+                            <span
+                                className="
+                                    auth-input-icon
+                                "
+                            >
+                                ◉
+                            </span>
+
+                            <input
+                                type="text"
+                                placeholder="Enter your username"
+                                value={username}
+                                onChange={(e) =>
+                                    setUsername(
+                                        e.target.value
+                                    )
+                                }
+                                autoComplete="username"
+                                required
+                            />
+
+                        </div>
+
+                    </div>
+
+
+                    {/* ==================================
+                        Email
+                    ================================== */}
+
+                    <div className="auth-field">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <div className="auth-input-wrapper">
+
+                            <span
+                                className="
+                                    auth-input-icon
+                                "
+                            >
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) =>
+                                    setEmail(
+                                        e.target.value
+                                    )
+                                }
+                                autoComplete="email"
+                                required
+                            />
+
+                        </div>
+
+                    </div>
+
+
+                    {/* ==================================
+                        Password
+                    ================================== */}
+
+                    <div className="auth-field">
+
+                        <label>
+                            Password
+                        </label>
+
+                        <div className="auth-input-wrapper">
+
+                            <span
+                                className="
+                                    auth-input-icon
+                                "
+                            >
+                                🔒
+                            </span>
+
+
+                            <input
+                                type={
+                                    showPassword
+                                        ? "text"
+                                        : "password"
+                                }
+                                placeholder="Create a password"
+                                value={password}
+                                onChange={(e) =>
+                                    setPassword(
+                                        e.target.value
+                                    )
+                                }
+                                autoComplete="new-password"
+                                minLength={6}
+                                required
+                            />
+
+
+                            <button
+                                type="button"
+                                className="
+                                    password-toggle
+                                "
+                                onClick={() =>
+                                    setShowPassword(
+                                        (prev) =>
+                                            !prev
+                                    )
+                                }
+                                aria-label={
+                                    showPassword
+                                        ? "Hide password"
+                                        : "Show password"
+                                }
+                            >
+
+                                {showPassword
+                                    ? "◉"
+                                    : "◌"
+                                }
+
+                            </button>
+
+                        </div>
+
+
+                        <div className="register-password-hint">
+                            Use at least 6 characters
+                        </div>
+
+                    </div>
+
+
+                    {/* ==================================
+                        Error
+                    ================================== */}
+
+                    {error && (
+
+                        <div
+                            className="
+                                auth-error
+                                register-error
+                            "
+                        >
+
+                            <span>
+                                ⚠
+                            </span>
+
+                            <span>
+                                {error}
+                            </span>
+
+                        </div>
+
+                    )}
+
+
+                    {/* ==================================
+                        Create Account Button
+                    ================================== */}
+
+                    <button
+                        type="submit"
+                        className="auth-submit"
+                        disabled={loading}
+                    >
+
+                        {loading ? (
+
+                            <>
+                                <span
+                                    className="
+                                        auth-spinner
+                                    "
+                                />
+
+                                Creating account...
+                            </>
+
+                        ) : (
+
+                            <>
+                                Create account
+
+                                <span
+                                    className="
+                                        login-arrow
+                                    "
+                                >
+                                    →
+                                </span>
+                            </>
+
+                        )}
+
+                    </button>
+
+                </form>
+
+
+                {/* ==================================
+                    Login Divider
+                ================================== */}
+
+                <div className="auth-divider">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                </div>
+
+
+                {/* ==================================
+                    Login Button
+                ================================== */}
+
+                <button
+                    type="button"
+                    className="auth-register"
+                    onClick={onSwitch}
+                    disabled={loading}
+                >
+                    Sign in instead
+                </button>
+
+
+                {/* ==================================
+                    Footer
+                ================================== */}
+
+                <p className="auth-footer">
+
+                    Your account and conversations
+                    are private and secure.
+
+                </p>
+
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? "Creating account..." : "Register"}
-          </button>
-
-        </form>
-
-        <p>
-          Already have an account?{" "}
-          <button
-            type="button"
-            className="auth-link"
-            onClick={onSwitch}
-          >
-            Login
-          </button>
-        </p>
-
-      </div>
-    </div>
-  );
+        </div>
+    );
 }
+ 

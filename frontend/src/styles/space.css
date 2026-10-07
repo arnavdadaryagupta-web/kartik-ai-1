@@ -1,6 +1,6 @@
 /* =========================================================
    KARTIK AI
-   CINEMATIC 3D SPACE BACKGROUND
+   CINEMATIC PROCEDURAL SPACE
 ========================================================= */
 
 .space-background {
@@ -24,7 +24,7 @@
 
 
 /* =========================================================
-   THREE.JS CANVAS
+   CANVAS
 ========================================================= */
 
 .space-background canvas {
@@ -36,8 +36,6 @@
 
   width: 100% !important;
   height: 100% !important;
-
-  pointer-events: none;
 }
 
 
@@ -56,7 +54,7 @@ body,
 
 
 /* =========================================================
-   APPLICATION
+   APP MUST BE TRANSPARENT
 ========================================================= */
 
 .app {
@@ -67,7 +65,7 @@ body,
   width: 100%;
   height: 100%;
 
-  background: transparent;
+  background: transparent !important;
 }
 
 
@@ -80,7 +78,7 @@ body,
 
   z-index: 2;
 
-  background: transparent;
+  background: transparent !important;
 }
 
 
@@ -98,7 +96,7 @@ body,
 ========================================================= */
 
 .messages {
-  background: transparent !important;
+  background: transparent;
 }
 
 
@@ -109,7 +107,7 @@ body,
 .sidebar {
   position: relative;
 
-  z-index: 3;
+  z-index: 10;
 }
 
 
@@ -120,7 +118,7 @@ body,
 .input-box {
   position: relative;
 
-  z-index: 4;
+  z-index: 20;
 }
 
 
@@ -131,13 +129,13 @@ body,
 .auth-page {
   position: relative;
 
-  z-index: 1;
+  z-index: 5;
 }
 
 .auth-card {
   position: relative;
 
-  z-index: 2;
+  z-index: 6;
 }
 
 
